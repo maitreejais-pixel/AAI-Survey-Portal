@@ -1,4 +1,5 @@
-const BASE_URL = "http://192.168.1.2:5000/api";
+const BASE_URL =
+  "https://aai-survey-backend-production-b62d.up.railway.app//api";
 
 export async function registerUser(data) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -17,7 +18,14 @@ export async function loginUser(data) {
     body: JSON.stringify(data),
   });
 
-  return res.json();
+  const json = await res.json();
+
+  if (!res.ok) {
+    // 👇 this makes catch() work in frontend
+    throw json;
+  }
+
+  return json;
 }
 
 export async function submitSurvey(data) {

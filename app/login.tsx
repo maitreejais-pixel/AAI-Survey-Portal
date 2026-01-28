@@ -10,6 +10,7 @@ import {
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { loginUser } from "../src/services/api";
+import { getDeviceId } from "@/src/utils/device";
 import * as Location from "expo-location";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -20,7 +21,8 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const response = await loginUser({ email, password });
+      const deviceId = await getDeviceId();
+      const response = await loginUser({ email, password, deviceId });
 
       if (response?.token && response?.user?.role) {
         Alert.alert("Success", "Login successful");
@@ -46,8 +48,9 @@ export default function LoginScreen() {
       } else {
         Alert.alert("Error", response.message || "Login failed");
       }
-    } catch {
-      Alert.alert("Error", "Something went wrong. Please try again.");
+    } catch (error: any) {
+      console.log("LOGIN ERROR:", error);
+      Alert.alert("Login Error", error?.message || "Server error");
     }
   };
 
