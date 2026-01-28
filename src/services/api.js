@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://aai-survey-backend-production-b62d.up.railway.app//api";
+  "https://aai-survey-backend-production-b62d.up.railway.app/api";
 
 export async function registerUser(data) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
@@ -28,10 +28,13 @@ export async function loginUser(data) {
   return json;
 }
 
-export async function submitSurvey(data) {
+export async function submitSurvey(data, token) {
   const res = await fetch(`${BASE_URL}/survey/submit`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(data),
   });
 
