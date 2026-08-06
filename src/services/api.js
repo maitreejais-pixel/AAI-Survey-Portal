@@ -1,5 +1,4 @@
-const BASE_URL =
-  "https://aai-survey-backend-production-b62d.up.railway.app/api";
+const BASE_URL = "https://aai-survey-backend.onrender.com/api";
 
 export async function registerUser(data) {
   const res = await fetch(`${BASE_URL}/auth/register`, {
